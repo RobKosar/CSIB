@@ -74,12 +74,19 @@ string justifyString(string str, int targ) {
 
 int main() {
     // Input file 
-    ifstream file("unjustified.txt");
+    string inpf, outpf;
+    cout << "Enter input file path including file extension: ";
+    cin >> inpf;
+    cout << "Enter output file path including file extension: ";
+    cin >> outpf;
+
+    ifstream file(inpf);
     string line;
 
     // Output file
-    ofstream outputFile("justified.txt");
+    ofstream outputFile(outpf);
 
+    srand(time(nullptr));
     while (getline(file, line)) {
         if (line.empty()) {
             outputFile << "\n";
@@ -92,7 +99,4 @@ int main() {
     }
 
     outputFile.close();
-
-    //srand(time(nullptr));
-    //justifyString(str, 90);
 }
