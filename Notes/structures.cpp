@@ -8,6 +8,28 @@ struct Date {
     int year;
 };
 
+// A function that interacts with our struct 
+Date setDate(int m, int d, int y) {
+    Date tmp = {d, m, y};
+    return tmp;
+}
+
+// Complex Structures
+struct Time {
+    int sec;
+    int min;
+    int hour;
+};
+
+// Date with substructure of time
+struct DateTime {
+    int day;
+    int month;
+    int year;
+
+    Time clock;
+};
+
 int main() {
     Date today; // Referencing the structure to make new variable
 
@@ -18,5 +40,11 @@ int main() {
 
     // Let's make one for my birthday using a different assignment method
     Date birthday = {21, 7, 2006};
-    cout << birthday.month << '/' << birthday.day << '/' << birthday.year;
+
+    // Let's make a new one using the function
+    Date independence_day = setDate(7, 4, 2026);
+
+    // Now lets look at complex structures
+    Time now = {52, 10, 12};
+    DateTime today_complex = {1, 7, 2026, now};
 }
