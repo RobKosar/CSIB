@@ -13,7 +13,7 @@ class Date {
         int getDay(){return day;} // Accessor function, also inline definition
         int getMonth(){return month;}
         int getYear(){return year;}
-        
+
         void setDate(int,int,int); // Mutator function
 };
 
@@ -26,5 +26,9 @@ void Date::setDate(int m, int d, int y){
 }
 
 int main() {
+    Date birthday;
 
+    birthday.setDate(7, 21, 2006);
+
+    cout << birthday.getMonth() << '/' << birthday.getDay() << '/' << birthday.getYear();
 }
