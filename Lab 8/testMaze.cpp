@@ -9,24 +9,25 @@ using std::cout; using std::cin; using std::endl;
 
 int main() {
 
-    // srand(time(nullptr)); // random seed
-    srand(1); // fixed seed
+    srand(time(nullptr)); // random seed
+    //srand(1); // fixed seed
 
-    Room myRoom = { 2, 'b' }; // create a room
+    Room myRoom = { 'b', 2 }; // create a room
 
     // print Room
     printRoom(myRoom);
 
     // make sure to implement goodDirection() and createAdjacent() first
     Room newMoveRoom = nextMove(myRoom); // asks user for new adjacent room
-    cout << "user selected adjacent room: "; printRoom(newMoveRoom); cout << endl;
+    cout << "\nuser selected adjacent room: "; printRoom(newMoveRoom);
    
     Room randomRoom = pickAdjacent(myRoom);
-    cout << "randomly selected adjacent room: "; printRoom(randomRoom); cout << endl;
+    cout << "\nrandomly selected adjacent room: "; printRoom(randomRoom);
 
     
-    if(matchRoom(randomRoom, newMoveRoom))
-        cout << "randomRoom is the same as newMoveRoom" << endl;
+    if (matchRoom(randomRoom, newMoveRoom)) {
+        cout << "\nrandomRoom is the same as newMoveRoom";
+    }
 
     //
     // second part: checking wall functions

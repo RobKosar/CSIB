@@ -17,12 +17,12 @@ const int numWalls = 8;  // number of internal walls
 //
 
 struct Room {
-    int x;  // 1 through mazeSize
-    char y; // 'a' through mazeSize
+    char x;  // 1 through mazeSize
+    int y; // 'a' through mazeSize
 };
 
-const Room startRoom = { 1, 'a' };
-const Room cheeseRoom = { mazeSize, 'a' + mazeSize-1 };
+const Room startRoom = { 'a', 1 };
+const Room cheeseRoom = { 'a' + mazeSize-1, mazeSize };
 
 // internal maze wall
 struct RoomPair{
