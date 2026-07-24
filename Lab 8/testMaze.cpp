@@ -32,7 +32,6 @@ int main() {
     //
     // second part: checking wall functions
     //
-    /*
     // select a fixed wall
     RoomPair myWall = { {2,'b'}, {2,'c'} };
 
@@ -40,20 +39,20 @@ int main() {
     cout << "myWall, fixed location: "; printPair(myWall); cout << endl;
 
     // select and print a random wall
-    myWall = pickPair();
+    myWall = pickPair(myRoom);
     cout << "myWall, random location: "; printPair(myWall); cout << endl;
 
-    RoomPair myMove; myMove.one = myRoom; myMove.two = newMoveRoom;
+    RoomPair myMove; 
+    myMove.one = myRoom; 
+    myMove.two = newMoveRoom;
 
     if (matchPair(myWall, myMove))
         cout << "there is a wall between these two rooms" << endl;
     else
        cout << "there is no wall between these two rooms" << endl;
-     */
     //
     // third part: check maze functions
     //
-    /*
     RoomPair myMaze[numWalls]; // array of walls in the maze
 
     clearWalls(myMaze); //assigning -1 and '*' to all rooms of the walls 
@@ -68,5 +67,9 @@ int main() {
 
     build(myMaze); // placing walls at random locations in the maze
     cout << "built maze: ";  printMaze(myMaze); cout << endl;
-    */
+
+    if (checkMaze(myMaze, myMaze[0]))
+       cout << "checkMaze returned true for a wall that is in the maze" << endl;
+    else
+       cout << "checkMaze returned false" << endl;
 }

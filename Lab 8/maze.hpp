@@ -58,7 +58,7 @@ const Room pickAdjacent(const Room &rm);
 
 
 // selects a random wall, uses pickAdjacent()
-const RoomPair pickPair(); 
+const RoomPair pickPair(const Room &rm); 
 
 
 // predicate returns true if the coordinates of the two rooms match

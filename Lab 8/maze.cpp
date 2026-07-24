@@ -9,9 +9,36 @@ using std::cout; using std::cin; using std::endl;
 // Debug functions
 void printRoom(const Room &rm) {
     cout  
+    << "\n"
     << rm.x  
     << rm.y 
     << "\n";
+}
+
+void printPair(const RoomPair &pr) {
+    cout  
+    << "\n"
+    << pr.one.x
+    << pr.one.y 
+    << "|"
+    << pr.two.x
+    << pr.two.y
+    << "\n";
+}
+
+void printMaze(const RoomPair mz[]) {
+    for (int i = 0; i < numWalls; i++) {
+        printPair(mz[i]);
+    }
+}
+
+// Initialization
+
+void clearWalls(RoomPair rp[]) {
+    for (int i = 0; i < numWalls; i++) {
+        rp[i].one = {'*', -1};
+        rp[i].two = {'*', -1};
+    }
 }
 
 // Checkers
@@ -21,6 +48,25 @@ bool matchRoom(const Room &rm1, const Room &rm2) {
     } else {
         return false;
     }
+}
+
+bool matchPair(const RoomPair &pr1, const RoomPair &pr2) {
+    if (matchRoom(pr1.one, pr2.one) && matchRoom(pr1.two, pr2.two)) {
+        return true;
+    } else if (matchRoom(pr1.one, pr2.two) && matchRoom(pr1.two, pr2.one)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+bool checkMaze(const RoomPair mz[], const RoomPair &rp) {
+    for (int i = 0; i < numWalls; i++) {
+        if (matchPair(mz[i], rp)) {
+            return true;
+        }
+    }
+    return false;
 }
 
 bool goodDirection(const Room &rm, const char dr) {
@@ -80,14 +126,15 @@ Room createAdjacent(const Room &rm, const char dr) {
             nrm.x += 1;
             break;
         default:
-            nrm = { '*', -1 };
+            nrm = {'*', -1};
     }
     return nrm;
 }
 
 const Room pickAdjacent(const Room &rm) {
-    int dir = rand()%3;
+    int dir = rand()%4;
     char dr;
+    Room nrm;
 
     switch(dir) {
         case 0:
@@ -106,8 +153,13 @@ const Room pickAdjacent(const Room &rm) {
             dr = 'N';
     }
 
-    cout << "\nDir: " << dir << " dr: " << dr;
-    return createAdjacent(rm, dr);
+    if (goodDirection(rm, dr)) {
+        nrm = createAdjacent(rm, dr);
+    } else {
+        nrm = {'*',-1};
+    }
+
+    return nrm;
 }
 
 const Room nextMove(const Room &currentRoom) {
@@ -121,9 +173,62 @@ const Room nextMove(const Room &currentRoom) {
             trm = createAdjacent(currentRoom, dr);
         }
     } else {
-        cout << "\nTriggered in next move";
-        trm = {'*',-1};
+        cout << "\nQuitting!";
+        trm = {'!',-1}; // ! is quit
     }
     return trm;
 }
 
+const RoomPair pickPair(const Room &rm) {
+    int dir = rand()%4;
+    char dr;
+    RoomPair npr;
+
+    switch(dir) {
+        case 0:
+            dr = 'u';
+            break;
+        case 1:
+            dr = 'd';
+            break;
+        case 2:
+            dr = 'l';
+            break;
+        case 3:
+            dr = 'r';
+            break;
+        default: 
+            dr = 'N';
+    }
+
+    if (goodDirection(rm, dr)) {
+        npr = {rm,createAdjacent(rm, dr)};
+    } else {
+        npr = {rm,{'*',-1}};
+    }
+
+    return npr;
+}
+
+void build(RoomPair rp[]) {
+    int wallsPlaced = 0;
+
+    clearWalls(rp);
+
+    while (wallsPlaced < numWalls) {
+        Room rm;
+        rm.x = 'a' + rand() % mazeSize;
+        rm.y = 1 + rand() % mazeSize;
+
+        RoomPair candidate = pickPair(rm);
+
+        if (candidate.two.y == -1) {
+            continue;
+        }
+
+        if (!checkMaze(rp, candidate)) {
+            rp[wallsPlaced] = candidate;
+            wallsPlaced++;
+        }
+    }
+}
