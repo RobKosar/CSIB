@@ -1,5 +1,6 @@
 #include "new_maze.hpp"
 #include <iostream>
+#include <limits>
 
 using std::cout; using std::cin; using std::endl;
 
@@ -135,6 +136,8 @@ Room Room::nextMove() const {
     while (true) {
         if (!(cin >> dr)) {
             cout << "Invalid input. Please enter a valid direction ('u','d','l','r') or 'q' to quit: ";
+            cin.clear();
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             continue;
         }
 
@@ -142,7 +145,7 @@ Room Room::nextMove() const {
         if (dr == 'q') {
             cout << "\nQuitting!";
             trm.x_ = -1;
-            trm.y_ = '!'; // ! is quit indicator
+            trm.y_ = '*'; // Consistent with documentation: {-1, *} for quit
             return trm;
         }
 
@@ -178,7 +181,9 @@ void Maze::build() {
         rm.pick();
         RoomPair candidate = RoomPair(rm, rm.pickAdjacent());
 
-        if (candidate.two_.y_ == '*' && candidate.two_.x_ == -1) {
+        // Fix: Check if the adjacent room is valid (not uninitialized)
+        // An uninitialized room has x_ = -1 and y_ = '*'
+        if (candidate.two_.x_ == -1 && candidate.two_.y_ == '*') {
             continue;
         }
 
@@ -221,7 +226,7 @@ bool matchRoom(const Room& rm1, const Room& rm2) {
 bool matchPair(const RoomPair& pr1, const RoomPair& pr2) {
     if (matchRoom(pr1.one_, pr2.one_) && matchRoom(pr1.two_, pr2.two_)) {
         return true;
-    } else if (matchRoom(pr1.one_, pr2.two_) && matchRoom(pr1.two_, pr2.one_)) {
+    } else if (matchRoom(pr1.one_, pr2.two_) && matchRoom(pr1.two_, pr1.one_)) {
         return true;
     } else {
         return false;

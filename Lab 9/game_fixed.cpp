@@ -32,7 +32,9 @@ int main() {
 
         Room nextRoom = currentRoom.nextMove();  // Use class method
 
-        if (nextRoom.y_ == '!' && nextRoom.x_ == -1) {
+        // Fix: Correct quit condition handling
+        // According to the documentation, nextMove() should return {-1, *} when quitting
+        if (nextRoom.x_ == -1 && nextRoom.y_ == '*') {
             cout << "Thanks for playing!" << '\n';
             break;
         }
