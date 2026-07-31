@@ -32,7 +32,7 @@ int main() {
 
         Room nextRoom = currentRoom.nextMove();  // Use class method
 
-        if (nextRoom.y_ == '!' && nextRoom.x_ == -1) {
+        if (nextRoom.x_ == '!' && nextRoom.y_ == -1) {
             cout << "Thanks for playing!" << '\n';
             break;
         }

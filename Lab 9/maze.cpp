@@ -71,10 +71,8 @@ bool Room::goodDirection(const char dr) const {
     }
 }
 
-Room Room::createAdjacent(const char dr) const {
-    Room nrm;
-    nrm.x_ = x_;
-    nrm.y_ = y_;
+const Room Room::createAdjacent(const char dr) const {
+    Room nrm = {x_, y_};
     switch (dr) {
         case 'u':
             nrm.y_ -= 1;
@@ -89,13 +87,12 @@ Room Room::createAdjacent(const char dr) const {
             nrm.x_ += 1;
             break;
         default:
-            nrm.x_ = -1;
-            nrm.y_ = '*';
+            nrm = {-1, '*'};
     }
     return nrm;
 }
 
-Room Room::pickAdjacent() {
+const Room Room::pickAdjacent() {
     int dir = rand() % 4;
     char dr;
     Room nrm;
@@ -120,14 +117,13 @@ Room Room::pickAdjacent() {
     if (goodDirection(dr)) {
         nrm = createAdjacent(dr);
     } else {
-        nrm.x_ = -1;
-        nrm.y_ = '*';
+        nrm = {-1, '*'};
     }
 
     return nrm;
 }
 
-Room Room::nextMove() const {
+const Room Room::nextMove() const {
     char dr;
     Room trm;
     cout << "Input next move: ";
@@ -141,8 +137,7 @@ Room Room::nextMove() const {
         // Check if it's a quit command
         if (dr == 'q') {
             cout << "\nQuitting!";
-            trm.x_ = -1;
-            trm.y_ = '!'; // ! is quit indicator
+            trm = {'!', -1}; // ! is quit
             return trm;
         }
 
@@ -170,7 +165,7 @@ void Maze::build() {
 
     // Initialize all walls to invalid state
     for (int i = 0; i < numWalls_; i++) {
-        walls_[i] = RoomPair(Room(), Room());
+        walls_[i] = RoomPair(Room('*', -1), Room('*', -1));
     }
 
     while (wallsPlaced < numWalls_) {
