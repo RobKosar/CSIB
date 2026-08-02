@@ -3,10 +3,6 @@
 
 using std::cout; using std::cin; using std::endl;
 
-//
-// Room
-//
-
 Room::Room() : x_(-1), y_('*') {}
 
 void Room::pick() {
@@ -88,13 +84,11 @@ const Room Room::nextMove() const {
             continue;
         }
 
-        // Check if it's a quit command
         if (dr == 'q') {
             cout << "\nQuitting!";
             return Room(); // {-1,*} is quit
         }
 
-        // Check if the direction is valid
         if (goodDirection(dr)) {
             return createAdjacent(dr);
         } else {
@@ -115,10 +109,6 @@ bool matchRoom(const Room &rm1, const Room &rm2) {
     }
 }
 
-//
-// RoomPair
-//
-
 void RoomPair::pick() {
     Room rm;
     Room adj;
@@ -126,7 +116,7 @@ void RoomPair::pick() {
     do {
         rm.pick();
         adj = rm.pickAdjacent();
-    } while (matchRoom(adj, Room())); // retry until a valid adjacent room is found
+    } while (matchRoom(adj, Room())); 
 
     one_ = rm;
     two_ = adj;
@@ -147,10 +137,6 @@ bool matchPair(const RoomPair &pr1, const RoomPair &pr2) {
         return false;
     }
 }
-
-//
-// Maze
-//
 
 bool Maze::checkMaze(const RoomPair &rp) const {
     for (int i = 0; i < numWalls_; i++) {
@@ -179,7 +165,7 @@ bool Maze::move(const Room &nextRoom) {
     RoomPair movePair(currentRoom_, nextRoom);
 
     if (checkMaze(movePair)) {
-        return false; // wall in the way
+        return false; 
     }
 
     currentRoom_ = nextRoom;
