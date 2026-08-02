@@ -1,4 +1,4 @@
-#include "new_maze.hpp"
+#include "maze.hpp"
 #include <iostream>
 #include <limits>
 
@@ -9,47 +9,45 @@ int main() {
 
     Maze myMaze;
     myMaze.build();
-
-    Room currentRoom;
     myMaze.start();
+
+    Room startRoom;
+    startRoom.makeStartRoom();
+
+    Room cheeseRoom;
+    cheeseRoom.makeCheeseRoom();
+
     bool gameWon = false;
 
-    cout << "Starting Room: " << "a1" << '\n';  // Fixed for class-based approach
-    cout << "Find the cheese at room " << "e5" << '\n';  // Fixed for class-based approach
+    cout << "Starting Room: "; startRoom.print(); cout << '\n';
+    cout << "Find the cheese at room "; cheeseRoom.print(); cout << '\n';
     cout << "Use 'u', 'd', 'l', 'r' to move." << '\n';
     cout << "'q' to quit." << '\n';
 
     while (!gameWon) {
-        cout << "\nYou are currently in room ";
-        currentRoom.print();  // Use class method
+        Room currentRoom = myMaze.getCurrentRoom();
 
-        // Check if player found cheese (simplified for class-based approach)
-        if (currentRoom.x_ == 5 && currentRoom.y_ == 'e') {  // Simplified cheese check
+        cout << "\nYou are currently in room "; currentRoom.print(); cout << '\n';
+
+        if (matchRoom(currentRoom, cheeseRoom)) {
             cout << "You found the cheese!" << '\n';
             gameWon = true;
             break;
         }
 
-        Room nextRoom = currentRoom.nextMove();  // Use class method
+        Room nextRoom = currentRoom.nextMove();
 
-        if (nextRoom.x_ == '!' && nextRoom.y_ == -1) {
+        if (matchRoom(nextRoom, Room())) {
             cout << "Thanks for playing!" << '\n';
             break;
         }
 
-        if (nextRoom.x_ == -1 && nextRoom.y_ == '*') {
-            cout << "Invalid move try again." << '\n';
-            continue;
-        }
-
-        if (!myMaze.move(nextRoom)) {  // Use class method
+        if (!myMaze.move(nextRoom)) {
             cout << "There's a wall in the way, try different direction." << '\n';
             continue;
         }
-
-        currentRoom = nextRoom;
     }
 
-    cout << "\nWalls:" << '\n';
-    myMaze.print();  // Use class method
+    cout << "\n";
+    myMaze.print();
 }
