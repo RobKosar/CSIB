@@ -1,6 +1,3 @@
-// implementation of maze navigation functions
-// see maze.hpp for prototypes and documentation
-
 #include "maze.hpp"
 #include <iostream>
 
@@ -72,39 +69,39 @@ bool checkMaze(const RoomPair mz[], const RoomPair &rp) {
 bool goodDirection(const Room &rm, const char dr) {
     switch (dr) {
         case 'u':
-            if ((rm.y - 1) > 0) {
-                cout << "\n" << dr << " is a good direction";
+            if ((rm.y - 1) >= 1) {
+                // cout << "\n" << dr << " is a good direction";
                 return true;
             } else {
-                cout << "\n" << dr << " is a bad direction";
+                // cout << "\n" << dr << " is a bad direction";
                 return false;
             }
         case 'd':
-            if ((rm.y + 1) < mazeSize) {
-                cout << "\n" << dr << " is a good direction";
+            if ((rm.y + 1) <= mazeSize) {
+                // cout << "\n" << dr << " is a good direction";
                 return true;
             } else {
-                cout << "\n" << dr << " is a bad direction";
+                // cout << "\n" << dr << " is a bad direction";
                 return false;
             }
         case 'l':
-            if ((rm.x - 1) != ('a' - 1)) {
-                cout << "\n" << dr << " is a good direction";
+            if ((rm.x - 1) >= 'a') {
+                // cout << "\n" << dr << " is a good direction";
                 return true;
             } else {
-                cout << "\n" << dr << " is a bad direction";
+                // cout << "\n" << dr << " is a bad direction";
                 return false;
             }
         case 'r':
-            if ((rm.x + 1) == ('a' + mazeSize)) {
-                cout << "\n" << dr << " is a bad direction";
-                return false;
-            } else {
-                cout << "\n" << dr << " is a good direction";
+            if ((rm.x + 1) <= ('a' + mazeSize - 1)) {
+                // cout << "\n" << dr << " is a good direction";
                 return true;
+            } else {
+                // cout << "\n" << dr << " is a bad direction";
+                return false;
             }
         default:
-            cout << "\n" << dr << " is a bad direction, defaulted";
+            // cout << "\n" << dr << " is a bad direction, defaulted";
             return false;
     }
 }
@@ -149,7 +146,7 @@ const Room pickAdjacent(const Room &rm) {
         case 3:
             dr = 'r';
             break;
-        default: 
+        default:
             dr = 'N';
     }
 
@@ -166,17 +163,28 @@ const Room nextMove(const Room &currentRoom) {
     char dr;
     Room trm;
     cout << "Input next move: ";
-    cin >> dr;
 
-    if (dr != 'q') {
+    while (true) {
+        if (!(cin >> dr)) {
+            cout << "Invalid input. Please enter a valid direction ('u','d','l','r') or 'q' to quit: ";
+            continue;
+        }
+
+        // Check if it's a quit command
+        if (dr == 'q') {
+            cout << "\nQuitting!";
+            trm = {'!',-1}; // ! is quit
+            return trm;
+        }
+
+        // Check if the direction is valid
         if (goodDirection(currentRoom, dr)) {
             trm = createAdjacent(currentRoom, dr);
+            return trm;
+        } else {
+            cout << "Invalid direction. Please enter a valid direction ('u','d','l','r') or 'q' to quit: ";
         }
-    } else {
-        cout << "\nQuitting!";
-        trm = {'!',-1}; // ! is quit
     }
-    return trm;
 }
 
 const RoomPair pickPair(const Room &rm) {
@@ -197,7 +205,7 @@ const RoomPair pickPair(const Room &rm) {
         case 3:
             dr = 'r';
             break;
-        default: 
+        default:
             dr = 'N';
     }
 
