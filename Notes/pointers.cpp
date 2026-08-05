@@ -18,7 +18,7 @@ void funcVal(int *p) { // Takes in the address of a variable, called like: funcV
 }
 
 // Passing pointer by reference
-void funcRef(int *& p) { // Takes in the address of a variable, called like funcRef(ptr), where int *ptr = &x
+void funcRef(int *&p) { // Takes in the address of a variable, called like funcRef(ptr), where int *ptr = &x
                          // However, instead of making a new pointer p it references the pointer that was passed (ptr)
 
     *p = 44; // This goes to the object stored in the memory location, and sets it to 44

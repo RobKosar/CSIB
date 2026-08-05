@@ -15,6 +15,8 @@ class Date {
         int getYear(){return year;}
 
         void setDate(int,int,int); // Mutator function
+
+        Date(int, int, int); // Constructor
 };
 
 // Writing functions for our Date class
@@ -25,8 +27,15 @@ void Date::setDate(int m, int d, int y){
     year = y;
 }
 
+// OOL Constructors 
+Date::Date(int x, int y, int z) {
+    day = x;
+    month = y;
+    year = z;
+}
+
 int main() {
-    Date birthday;
+    Date birthday(0,0,0);
 
     birthday.setDate(7, 21, 2006);
 
