@@ -18,7 +18,6 @@ int main() {
         }
 
         if (operation == 'a') {
-            // Add number
             if (numbers.check(number) != -1) {
                 cout << "duplicate!" << endl;
             } else {
@@ -29,7 +28,6 @@ int main() {
         }
 
         if (operation == 'r') {
-            // Remove number
             if (numbers.check(number) == -1) {
                 cout << "not present!" << endl;
             } else {

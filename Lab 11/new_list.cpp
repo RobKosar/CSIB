@@ -8,7 +8,6 @@ List::List() {
     list_ = new double[size_];
 }
 
-// Check if number exists in the list
 int List::check(double number) {
     for (int i = 0; i < size_; i++) {
         if (list_[i] == number) {
@@ -20,44 +19,33 @@ int List::check(double number) {
 
 // Add number to the list
 void List::addNumber(double number) {
-    // Check if number already exists
     if (check(number) != -1) {
         return;
     }
 
-    // Allocate new array with one more element
     double *newArray = new double[size_ + 1];
 
-    // Copy old elements to new array
     for (int i = 0; i < size_; i++) {
         newArray[i] = list_[i];
     }
 
-    // Add the new number
     newArray[size_] = number;
 
-    // Deallocate old array
     delete[] list_;
 
-    // Update pointer to new array
     list_ = newArray;
 
-    // Increase size
     size_++;
 }
 
-// Remove number from the list
 void List::removeNumber(double number) {
-    // Check if number exists
     int index = check(number);
     if (index == -1) {
         return;
     }
 
-    // Allocate new array with one less element
     double *newArray = new double[size_ - 1];
 
-    // Copy elements, skipping the one to remove
     int newIndex = 0;
     for (int i = 0; i < size_; i++) {
         if (list_[i] != number) {
@@ -66,13 +54,11 @@ void List::removeNumber(double number) {
         }
     }
 
-    // Deallocate old array
     delete[] list_;
 
     // Update pointer to new array
     list_ = newArray;
 
-    // Decrease size
     size_--;
 }
 
@@ -87,7 +73,6 @@ void List::output() {
     cout << endl;
 }
 
-// Copy constructor
 List::List(const List& other) {
     size_ = other.size_;
     list_ = new double[size_];
@@ -97,18 +82,13 @@ List::List(const List& other) {
     }
 }
 
-// Assignment operator
 List& List::operator=(const List& other) {
-    // Check for self-assignment
     if (this != &other) {
-        // Deallocate existing memory
         delete[] list_;
 
-        // Copy new size and allocate new memory
         size_ = other.size_;
         list_ = new double[size_];
 
-        // Copy elements
         for (int i = 0; i < size_; i++) {
             list_[i] = other.list_[i];
         }
@@ -117,7 +97,6 @@ List& List::operator=(const List& other) {
     return *this;
 }
 
-// Destructor
 List::~List() {
     delete[] list_;
 }
