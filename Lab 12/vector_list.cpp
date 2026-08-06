@@ -1,6 +1,5 @@
 #include "vector_list.hpp"
 #include <iostream>
-#include <algorithm>
 using namespace std;
 
 List::List() {
@@ -8,9 +7,10 @@ List::List() {
 }
 
 int List::check(double number) {
-    auto it = find(list_.begin(), list_.end(), number);
-    if (it != list_.end()) {
-        return distance(list_.begin(), it);
+    for (int i = 0; i < (int)list_.size(); i++) {
+        if (list_[i] == number) {
+            return i;
+        }
     }
     return -1;
 }
