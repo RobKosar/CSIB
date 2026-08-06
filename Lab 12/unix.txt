@@ -1,0 +1,68 @@
+Step-by-Step Guide to Completing Your UNIX Assignment
+
+  Step 1: Connect to the UNIX Server
+
+  1. Download and install a terminal client like PuTTY (for Windows) or use your system's built-in terminal (for
+  Mac/Linux)
+  2. Connect to one of the university's UNIX servers:
+    - wasp.cs.kent.edu
+    - hornet.cs.kent.edu
+  3. Use your subversion username and password to log in
+
+  Step 2: Prepare Your Files
+
+  1. Transfer your existing C++ files to the UNIX server:
+  # You can use SCP or SFTP to transfer files from your local machine
+  # Or create new files directly on the server
+  2. If needed, create the files directly on the server using an editor:
+  nano main.cpp
+  # Then paste your code
+
+  Step 3: Compile Your Program
+
+  1. Navigate to your project directory:
+  cd ~
+  2. Compile your C++ program using g++:
+  g++ -o Lab12_ListVectors main.cpp vector_list.cpp
+
+  2. This creates an executable named Lab12_ListVectors.
+
+  Step 4: Create a Typescript Record
+
+  1. Start recording your session:
+  script typescript
+  2. Execute your program to demonstrate it works:
+  ./Lab12_ListVectors
+
+  2. (This will show the interactive menu as described in the instructions)
+  3. When you're done demonstrating, exit the script recorder:
+  exit
+  4. Verify your typescript file was created:
+  ls -la typescript
+
+  Step 5: Submit to Subversion Repository
+
+  1. Create a new project directory in the SVN repository:
+  svn mkdir https://svn.cs.kent.edu/courses/cs13012/svn/YOUR_USERNAME/Lab12 -m "creating Lab12 project directory"
+  2. Check out the project locally:
+  svn checkout https://svn.cs.kent.edu/courses/cs13012/svn/YOUR_USERNAME/Lab12
+  3. Copy your files to the project directory:
+  cp Lab12_ListVectors typescript Lab12/
+  4. Add files to SVN control:
+  svn add Lab12/Lab12_ListVectors
+  svn add Lab12/typescript
+  5. Commit your changes:
+  svn commit Lab12/ -m "committing Lab12"
+  6. Clean up local files:
+  rm -rf Lab12/
+
+  Important Notes:
+
+  - Make sure to replace YOUR_USERNAME with your actual subversion username
+  - The typescript file is crucial - it proves you actually used the UNIX environment and successfully compiled your
+  code
+  - Your program should run exactly as described in the instructions (with the menu interface)
+  - Keep all your source files (.cpp and .hpp) in the submission along with the typescript file
+
+  This process demonstrates that you've actually used the UNIX environment to develop, compile, and test your program as
+  required by the assignment
